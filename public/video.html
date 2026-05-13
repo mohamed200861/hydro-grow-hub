@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video del progetto - Growing Knowledge</title>
+  <link rel="icon" href="logo.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-top">
+      <img src="logo.png" alt="Logo Growing Knowledge" />
+      <div class="header-titles">
+        <h1>GROWING KNOWLEDGE</h1>
+        <p>Coltivare piante per crescere idee</p>
+      </div>
+    </div>
+    <nav class="nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="galleria.html">Galleria</a></li>
+        <li><a href="video.html" class="active">Video</a></li>
+        <li><a href="carica.html">Carica contenuti</a></li>
+        <li><a href="index.html#contatti">Contatti</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section>
+    <h2 class="section-title">Video del progetto</h2>
+    <p class="lead">Il video principale del laboratorio Growing Knowledge.</p>
+
+    <div class="video-wrap">
+      <video controls poster="hero.jpg">
+        <source src="video.mp4" type="video/mp4" />
+        Il tuo browser non supporta il video HTML5.
+      </video>
+    </div>
+
+    <h3 class="subtitle" style="margin-top:3rem;">Video caricato</h3>
+    <div class="video-wrap" id="userVideoWrap"></div>
+    <p id="userVideoEmpty" class="muted">Nessun video caricato. Vai alla pagina <a href="carica.html">Carica contenuti</a>.</p>
+  </section>
+
+  <footer>© 2026 Growing Knowledge - IIS Caramuel Roncalli</footer>
+  <script src="script.js"></script>
+  <script>GK.renderVideo('userVideoWrap', 'userVideoEmpty');</script>
+</body>
+</html>
