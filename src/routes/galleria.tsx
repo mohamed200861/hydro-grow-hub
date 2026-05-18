@@ -262,17 +262,18 @@ function Lightbox({
               return;
             }
             (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-            drag = { x: e.clientX, y: e.clientY, ox: offset.x, oy: offset.y };
+            dragRef.current = { x: e.clientX, y: e.clientY, ox: offset.x, oy: offset.y };
             setDragging(true);
           }}
           onPointerMove={(e) => {
-            if (!drag) return;
-            setOffset({ x: drag.ox + (e.clientX - drag.x), y: drag.oy + (e.clientY - drag.y) });
+            const d = dragRef.current;
+            if (!d) return;
+            setOffset({ x: d.ox + (e.clientX - d.x), y: d.oy + (e.clientY - d.y) });
           }}
           onPointerUp={(e) => {
-            drag = null;
+            dragRef.current = null;
             setDragging(false);
-            try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch {}
+            try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch { /* noop */ }
           }}
           onDoubleClick={() => {
             if (zoom > 1) { setZoom(1); setOffset({ x: 0, y: 0 }); }
