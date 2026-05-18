@@ -106,8 +106,32 @@ function VideoPage() {
                 )}
               </div>
             )}
+            <p className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-foreground/80">
+              Il video racconta il percorso del progetto, dall'osservazione del territorio
+              alla sperimentazione idroponica, mostrando il valore scientifico, didattico e
+              ambientale di <strong>Growing Knowledge</strong>.
+            </p>
           </div>
         )}
+
+        <div className="mt-14 grid gap-5 sm:grid-cols-3">
+          {[
+            { icon: <Microscope className="h-5 w-5" />, title: "Ricerca", text: "Sperimentazioni scientifiche e collaborazioni universitarie." },
+            { icon: <Leaf className="h-5 w-5" />, title: "Sostenibilità", text: "Riduzione del consumo idrico fino all'80–90%." },
+            { icon: <Lightbulb className="h-5 w-5" />, title: "Innovazione", text: "Coltivazione idroponica indoor del riso." },
+          ].map((c) => (
+            <div
+              key={c.title}
+              className="rounded-2xl border border-border/60 bg-background p-6 shadow-[var(--shadow-soft)] transition-transform hover:-translate-y-1"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                {c.icon}
+              </div>
+              <h3 className="mt-4 text-base font-bold text-primary">{c.title}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{c.text}</p>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );
