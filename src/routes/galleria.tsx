@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ImageOff, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 
@@ -156,10 +156,8 @@ function Lightbox({
 }) {
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const dragRef = useState<{ startX: number; startY: number; baseX: number; baseY: number } | null>(null as never)[0] as never;
-  // simple drag state via refs in closures
   const [dragging, setDragging] = useState(false);
-  const startRef = (useEffect as unknown) && null;
+  const dragRef = useRef<{ x: number; y: number; ox: number; oy: number } | null>(null);
 
   // reset on photo change
   useEffect(() => {
@@ -180,8 +178,6 @@ function Lightbox({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose, onPrev, onNext]);
 
-  // pointer drag for panning when zoomed
-  let drag: { x: number; y: number; ox: number; oy: number } | null = null;
 
   return (
     <div
