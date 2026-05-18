@@ -141,19 +141,33 @@ function EmptyState() {
   );
 }
 
-function Lightbox({ photo, onClose }: { photo: MediaRow; onClose: () => void }) {
+function Lightbox({
+  photo,
+  onClose,
+  onPrev,
+  onNext,
+  hasMany,
+}: {
+  photo: MediaRow;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  hasMany: boolean;
+}) {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [onClose, onPrev, onNext]);
 
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-primary/95 p-4 backdrop-blur"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-primary/95 p-4 backdrop-blur animate-fade-in"
     >
       <button
         type="button"
@@ -163,6 +177,26 @@ function Lightbox({ photo, onClose }: { photo: MediaRow; onClose: () => void }) 
       >
         <X className="h-5 w-5" />
       </button>
+      {hasMany && (
+        <>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); onPrev(); }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-background/15 p-3 text-white hover:bg-background/25 md:left-6"
+            aria-label="Foto precedente"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); onNext(); }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-background/15 p-3 text-white hover:bg-background/25 md:right-6"
+            aria-label="Foto successiva"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        </>
+      )}
       <div onClick={(e) => e.stopPropagation()} className="max-h-[90vh] max-w-5xl">
         <img
           src={photo.file_url}
