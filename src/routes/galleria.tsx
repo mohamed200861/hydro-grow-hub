@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { ImageOff, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ImageOff, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 
 export const Route = createFileRoute("/galleria")({
   head: () => ({
@@ -154,35 +154,90 @@ function Lightbox({
   onNext: () => void;
   hasMany: boolean;
 }) {
+  const [zoom, setZoom] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const dragRef = useState<{ startX: number; startY: number; baseX: number; baseY: number } | null>(null as never)[0] as never;
+  // simple drag state via refs in closures
+  const [dragging, setDragging] = useState(false);
+  const startRef = (useEffect as unknown) && null;
+
+  // reset on photo change
+  useEffect(() => {
+    setZoom(1);
+    setOffset({ x: 0, y: 0 });
+  }, [photo.id]);
+
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") onPrev();
       if (e.key === "ArrowRight") onNext();
+      if (e.key === "+" || e.key === "=") setZoom((z) => Math.min(z + 0.25, 4));
+      if (e.key === "-") setZoom((z) => Math.max(z - 0.25, 1));
+      if (e.key === "0") { setZoom(1); setOffset({ x: 0, y: 0 }); }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose, onPrev, onNext]);
 
+  // pointer drag for panning when zoomed
+  let drag: { x: number; y: number; ox: number; oy: number } | null = null;
+
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-primary/95 p-4 backdrop-blur animate-fade-in"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/95 p-2 backdrop-blur animate-fade-in sm:p-4"
     >
-      <button
-        type="button"
-        onClick={onClose}
-        className="absolute right-5 top-5 rounded-full bg-background/15 p-2 text-white hover:bg-background/25"
-        aria-label="Chiudi"
+      {/* Top bar */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="absolute right-3 top-3 z-10 flex items-center gap-2 rounded-full bg-white/10 p-1.5 backdrop-blur md:right-5 md:top-5"
       >
-        <X className="h-5 w-5" />
-      </button>
+        <button
+          type="button"
+          onClick={() => setZoom((z) => Math.max(z - 0.25, 1))}
+          className="rounded-full p-2 text-white hover:bg-white/15 disabled:opacity-40"
+          disabled={zoom <= 1}
+          aria-label="Riduci zoom"
+        >
+          <ZoomOut className="h-5 w-5" />
+        </button>
+        <span className="min-w-[44px] text-center text-xs font-semibold text-white tabular-nums">
+          {Math.round(zoom * 100)}%
+        </span>
+        <button
+          type="button"
+          onClick={() => setZoom((z) => Math.min(z + 0.25, 4))}
+          className="rounded-full p-2 text-white hover:bg-white/15 disabled:opacity-40"
+          disabled={zoom >= 4}
+          aria-label="Aumenta zoom"
+        >
+          <ZoomIn className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => { setZoom(1); setOffset({ x: 0, y: 0 }); }}
+          className="rounded-full p-2 text-white hover:bg-white/15"
+          aria-label="Ripristina zoom"
+        >
+          <Maximize2 className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          onClick={onClose}
+          className="rounded-full p-2 text-white hover:bg-white/15"
+          aria-label="Chiudi"
+        >
+          <X className="h-5 w-5" />
+        </button>
+      </div>
+
       {hasMany && (
         <>
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); onPrev(); }}
-            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-background/15 p-3 text-white hover:bg-background/25 md:left-6"
+            className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white hover:bg-white/20 md:left-5"
             aria-label="Foto precedente"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -190,23 +245,59 @@ function Lightbox({
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); onNext(); }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-background/15 p-3 text-white hover:bg-background/25 md:right-6"
+            className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white hover:bg-white/20 md:right-5"
             aria-label="Foto successiva"
           >
             <ChevronRight className="h-6 w-6" />
           </button>
         </>
       )}
-      <div onClick={(e) => e.stopPropagation()} className="max-h-[90vh] max-w-5xl">
-        <img
-          src={photo.file_url}
-          alt={photo.title ?? ""}
-          className="max-h-[80vh] w-auto rounded-2xl object-contain"
-        />
+
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="flex h-full w-full flex-col items-center justify-center overflow-hidden"
+      >
+        <div
+          className="relative flex h-[88vh] w-[95vw] items-center justify-center overflow-hidden select-none"
+          style={{ cursor: zoom > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in" }}
+          onPointerDown={(e) => {
+            if (zoom <= 1) {
+              setZoom(2);
+              return;
+            }
+            (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+            drag = { x: e.clientX, y: e.clientY, ox: offset.x, oy: offset.y };
+            setDragging(true);
+          }}
+          onPointerMove={(e) => {
+            if (!drag) return;
+            setOffset({ x: drag.ox + (e.clientX - drag.x), y: drag.oy + (e.clientY - drag.y) });
+          }}
+          onPointerUp={(e) => {
+            drag = null;
+            setDragging(false);
+            try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch {}
+          }}
+          onDoubleClick={() => {
+            if (zoom > 1) { setZoom(1); setOffset({ x: 0, y: 0 }); }
+            else setZoom(2);
+          }}
+        >
+          <img
+            src={photo.file_url}
+            alt={photo.title ?? ""}
+            draggable={false}
+            className="max-h-full max-w-full object-contain rounded-xl shadow-2xl transition-transform duration-150 ease-out"
+            style={{
+              transform: `translate(${offset.x}px, ${offset.y}px) scale(${zoom})`,
+              transformOrigin: "center center",
+            }}
+          />
+        </div>
         {(photo.title || photo.description) && (
-          <div className="mt-4 text-center text-white">
-            {photo.title && <p className="text-base font-semibold">{photo.title}</p>}
-            {photo.description && <p className="mt-1 text-sm opacity-80">{photo.description}</p>}
+          <div className="mt-3 max-w-3xl text-center text-white">
+            {photo.title && <p className="text-sm font-semibold md:text-base">{photo.title}</p>}
+            {photo.description && <p className="mt-1 text-xs opacity-80 md:text-sm">{photo.description}</p>}
           </div>
         )}
       </div>
