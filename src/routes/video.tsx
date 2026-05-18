@@ -64,7 +64,7 @@ function VideoPage() {
             Video del progetto
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base opacity-90 md:text-lg">
-            Scopri il laboratorio Growing Knowledge attraverso immagini, esperimenti e momenti di ricerca.
+            Scopri il percorso di Growing Knowledge attraverso immagini, ricerca e sperimentazione idroponica.
           </p>
         </div>
       </section>
