@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { VideoOff } from "lucide-react";
+import { VideoOff, PlayCircle, Microscope, Leaf, Lightbulb } from "lucide-react";
 
 export const Route = createFileRoute("/video")({
   head: () => ({
@@ -47,16 +47,24 @@ function VideoPage() {
 
   return (
     <div>
-      <section className="border-b border-border/60 bg-gradient-to-br from-primary/5 to-secondary/5">
-        <div className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20 text-center">
-          <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+      <section className="relative overflow-hidden border-b border-border/60">
+        <div
+          className="absolute inset-0 -z-10"
+          style={{ background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 60%, var(--accent) 100%)" }}
+        />
+        <div className="absolute inset-0 -z-10 opacity-20 bg-[radial-gradient(circle_at_20%_30%,white,transparent_40%),radial-gradient(circle_at_80%_70%,white,transparent_45%)]" />
+        <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24 text-center text-primary-foreground">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 backdrop-blur">
+            <PlayCircle className="h-7 w-7" />
+          </div>
+          <span className="mt-5 inline-block rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur">
             Video
           </span>
-          <h1 className="mt-4 text-3xl font-bold text-primary md:text-5xl">
+          <h1 className="mt-4 text-3xl font-bold md:text-5xl lg:text-6xl">
             Video del progetto
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground">
-            Il racconto in immagini del laboratorio di idroponica e della sua evoluzione.
+          <p className="mx-auto mt-5 max-w-2xl text-base opacity-90 md:text-lg">
+            Scopri il laboratorio Growing Knowledge attraverso immagini, esperimenti e momenti di ricerca.
           </p>
         </div>
       </section>
