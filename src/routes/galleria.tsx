@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { ImageOff, X } from "lucide-react";
+import { ImageOff, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/galleria")({
   head: () => ({
@@ -44,7 +44,14 @@ function GalleriaPage() {
     setLoading(false);
   }
 
-  const open = openId ? photos.find((p) => p.id === openId) ?? null : null;
+  const openIndex = openId ? photos.findIndex((p) => p.id === openId) : -1;
+  const open = openIndex >= 0 ? photos[openIndex] : null;
+
+  function go(delta: number) {
+    if (openIndex < 0 || photos.length === 0) return;
+    const next = (openIndex + delta + photos.length) % photos.length;
+    setOpenId(photos[next].id);
+  }
 
   return (
     <div>
@@ -98,7 +105,13 @@ function GalleriaPage() {
       </section>
 
       {open && (
-        <Lightbox photo={open} onClose={() => setOpenId(null)} />
+        <Lightbox
+          photo={open}
+          onClose={() => setOpenId(null)}
+          onPrev={() => go(-1)}
+          onNext={() => go(1)}
+          hasMany={photos.length > 1}
+        />
       )}
     </div>
   );
