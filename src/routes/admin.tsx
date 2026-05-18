@@ -143,8 +143,15 @@ function PhotoUploader({ onUploaded, userId }: { onUploaded: () => void; userId:
   const [description, setDescription] = useState("");
   const [busy, setBusy] = useState(false);
 
+  const MAX_PHOTO = 50 * 1024 * 1024; // 50 MB
+
   function onPick(e: ChangeEvent<HTMLInputElement>) {
-    setFiles(Array.from(e.target.files ?? []));
+    const picked = Array.from(e.target.files ?? []);
+    const tooBig = picked.filter((f) => f.size > MAX_PHOTO);
+    if (tooBig.length) {
+      toast.error(`Alcuni file superano 50 MB e non saranno caricati: ${tooBig.map((f) => f.name).join(", ")}`);
+    }
+    setFiles(picked.filter((f) => f.size <= MAX_PHOTO));
   }
 
   async function onSubmit(e: FormEvent) {
