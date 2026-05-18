@@ -64,21 +64,21 @@ function VideoPage() {
             Video del progetto
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base opacity-90 md:text-lg">
-            Scopri il laboratorio Growing Knowledge attraverso immagini, esperimenti e momenti di ricerca.
+            Scopri il percorso di Growing Knowledge attraverso immagini, ricerca e sperimentazione idroponica.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-14 md:px-8 md:py-20">
+      <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
         {loading ? (
-          <div className="aspect-video w-full animate-pulse rounded-3xl bg-muted" />
+          <div className="mx-auto aspect-video w-full max-w-6xl animate-pulse rounded-[2rem] bg-muted" />
         ) : !video ? (
           <div className="mx-auto max-w-md rounded-3xl border border-dashed border-border bg-muted/40 p-12 text-center">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-background text-primary">
               <VideoOff className="h-6 w-6" />
             </div>
             <h2 className="mt-4 text-lg font-semibold text-primary">
-              Nessun video caricato al momento
+              Nessun video pubblicato al momento
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Il video caricato dall'amministratore apparirà automaticamente in questa pagina.
@@ -86,13 +86,23 @@ function VideoPage() {
           </div>
         ) : (
           <div>
-            <div className="overflow-hidden rounded-3xl border border-border/60 bg-primary shadow-[var(--shadow-elegant)]">
-              <video
-                key={video.id}
-                src={video.file_url}
-                controls
-                className="aspect-video w-full bg-black"
+            <div className="relative mx-auto w-full max-w-6xl animate-fade-in">
+              <div
+                className="absolute -inset-3 rounded-[2.5rem] opacity-60 blur-2xl md:-inset-5"
+                style={{ background: "linear-gradient(135deg, var(--primary), var(--secondary), var(--accent))" }}
               />
+              <div
+                className="relative overflow-hidden rounded-[2rem] p-1.5 shadow-[var(--shadow-elegant)] md:p-2"
+                style={{ background: "linear-gradient(135deg, var(--primary), var(--secondary) 60%, var(--accent))" }}
+              >
+                <video
+                  key={video.id}
+                  src={video.file_url}
+                  controls
+                  playsInline
+                  className="block aspect-video w-full rounded-[1.6rem] bg-black"
+                />
+              </div>
             </div>
             {(video.title || video.description) && (
               <div className="mt-6 text-center">
