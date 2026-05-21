@@ -14,6 +14,9 @@ import {
   Upload,
   Check,
   X,
+  Home as HomeIcon,
+  Trophy,
+  Plus,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
@@ -112,7 +115,11 @@ function AdminDashboard() {
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         <PhotoUploader onUploaded={load} userId={user!.id} />
         <VideoUploader onUploaded={load} userId={user!.id} />
+        <HeroUploader onUploaded={load} userId={user!.id} />
       </div>
+
+      <RecognitionsManager userId={user!.id} />
+
 
       <section className="mt-10">
         <h2 className="text-xl font-bold text-primary">Contenuti caricati</h2>
