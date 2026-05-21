@@ -61,7 +61,7 @@ function VideoPage() {
     <div>
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-border/60 bg-primary/10">
-        <div className="mx-auto max-w-7xl px-4 py-16 text-center text-[oklch(0.32_0.11_250)] md:px-8 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 py-12 text-center text-[oklch(0.32_0.11_250)] md:px-8 md:py-16">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/70 ring-1 ring-primary/20">
             <PlayCircle className="h-7 w-7" />
           </div>
@@ -82,7 +82,7 @@ function VideoPage() {
       </section>
 
       {/* VIDEO */}
-      <section className="mx-auto max-w-7xl px-4 pb-14 md:px-8 md:pb-20">
+      <section className="mx-auto max-w-7xl px-4 pt-12 pb-14 md:px-8 md:pt-16 md:pb-20">
         {loading ? (
           <div className="mx-auto aspect-video w-full max-w-6xl animate-pulse rounded-[2rem] bg-muted" />
         ) : !video ? (
@@ -104,7 +104,7 @@ function VideoPage() {
           <div>
             <div className="relative mx-auto w-full max-w-6xl animate-fade-in">
               <div
-                className="absolute -inset-3 rounded-[2.5rem] opacity-60 blur-2xl md:-inset-5"
+                className="absolute -inset-3 rounded-[2.5rem] opacity-50 blur-2xl md:-inset-5"
                 style={{
                   background:
                     "linear-gradient(135deg, var(--primary), var(--secondary), var(--accent))",
