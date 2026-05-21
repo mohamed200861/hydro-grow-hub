@@ -12,7 +12,10 @@ export const Route = createFileRoute("/riconoscimenti")({
         content:
           "Esperienze, eventi e risultati che hanno valorizzato il progetto Growing Knowledge dell'IIS Caramuel Roncalli di Vigevano.",
       },
-      { property: "og:title", content: "Riconoscimenti e traguardi — Growing Knowledge" },
+      {
+        property: "og:title",
+        content: "Riconoscimenti e traguardi — Growing Knowledge",
+      },
       {
         property: "og:description",
         content: "I premi, gli eventi e i traguardi del progetto Growing Knowledge.",
@@ -39,12 +42,14 @@ function RiconoscimentiPage() {
 
   async function load() {
     setLoading(true);
+
     const { data } = await supabase
       .from("recognitions")
       .select("id, title, description, image_url")
       .eq("is_published", true)
       .order("sort_order", { ascending: false })
       .order("created_at", { ascending: false });
+
     setItems(data ?? []);
     setLoading(false);
   }
@@ -52,39 +57,35 @@ function RiconoscimentiPage() {
   return (
     <div>
       {/* HERO */}
-      <section className="relative overflow-hidden border-b border-border/60">
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "linear-gradient(135deg, oklch(0.28 0.10 250) 0%, oklch(0.38 0.12 210) 55%, oklch(0.45 0.13 175) 100%)",
-          }}
-        />
-        <div className="absolute inset-0 -z-10 bg-black/30" />
-        <div className="absolute inset-0 -z-10 opacity-15 bg-[radial-gradient(circle_at_20%_30%,white,transparent_45%),radial-gradient(circle_at_85%_75%,white,transparent_50%)]" />
-        <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24 text-center text-white [text-shadow:0_2px_12px_rgb(0_0_0/0.35)]">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/25">
+      <section className="relative overflow-hidden border-b border-border/60 bg-primary/10">
+        <div className="mx-auto max-w-7xl px-4 py-16 text-center text-[oklch(0.32_0.11_250)] md:px-8 md:py-24">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/70 ring-1 ring-primary/20">
             <Trophy className="h-7 w-7" />
           </div>
-          <span className="mt-5 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur ring-1 ring-primary/20">
-          Riconoscimenti
+
+          <span className="mt-5 inline-block rounded-full bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider ring-1 ring-primary/20">
+            Riconoscimenti
           </span>
+
           <h1 className="mt-4 text-3xl font-bold md:text-5xl lg:text-6xl">
             Riconoscimenti e traguardi
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base text-white/95 md:text-lg">
+
+          <p className="mx-auto mt-5 max-w-2xl text-base opacity-80 md:text-lg">
             Esperienze, eventi e risultati che hanno valorizzato il progetto Growing Knowledge.
           </p>
         </div>
       </section>
-
 
       {/* GRID */}
       <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="aspect-[4/5] animate-pulse rounded-3xl bg-muted" />
+              <div
+                key={i}
+                className="aspect-[4/5] animate-pulse rounded-3xl bg-muted"
+              />
             ))}
           </div>
         ) : items.length === 0 ? (
@@ -101,10 +102,16 @@ function RiconoscimentiPage() {
   );
 }
 
-function RecognitionCard({ item, index }: { item: RecognitionRow; index: number }) {
+function RecognitionCard({
+  item,
+  index,
+}: {
+  item: RecognitionRow;
+  index: number;
+}) {
   return (
     <article
-      className="group flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-background shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-elegant)] animate-fade-in"
+      className="group flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-background shadow-[var(--shadow-soft)] transition-all duration-300 animate-fade-in hover:-translate-y-1.5 hover:shadow-[var(--shadow-elegant)]"
       style={{ animationDelay: `${index * 60}ms` }}
     >
       <div className="relative aspect-[5/4] overflow-hidden bg-muted">
@@ -126,16 +133,24 @@ function RecognitionCard({ item, index }: { item: RecognitionRow; index: number 
             <Award className="h-12 w-12 text-white/80" />
           </div>
         )}
+
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
+
         <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary backdrop-blur">
-          <Award className="h-3.5 w-3.5" /> Riconoscimento
+          <Award className="h-3.5 w-3.5" />
+          Riconoscimento
         </div>
       </div>
 
       <div className="flex flex-1 flex-col p-6">
-        <h2 className="text-lg font-bold leading-snug text-primary md:text-xl">{item.title}</h2>
+        <h2 className="text-lg font-bold leading-snug text-primary md:text-xl">
+          {item.title}
+        </h2>
+
         {item.description && (
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            {item.description}
+          </p>
         )}
       </div>
     </article>
@@ -148,9 +163,11 @@ function EmptyState() {
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-background text-primary">
         <Trophy className="h-6 w-6" />
       </div>
+
       <h2 className="mt-4 text-lg font-semibold text-primary">
         Nessun riconoscimento pubblicato al momento
       </h2>
+
       <p className="mt-2 text-sm text-muted-foreground">
         I riconoscimenti aggiunti dall'amministratore appariranno automaticamente qui.
       </p>
