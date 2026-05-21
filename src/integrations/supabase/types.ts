@@ -62,6 +62,45 @@ export type Database = {
         }
         Relationships: []
       }
+      recognitions: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_path: string | null
+          image_url: string | null
+          is_published: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_path?: string | null
+          image_url?: string | null
+          is_published?: boolean
+          sort_order?: number
+          title: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_path?: string | null
+          image_url?: string | null
+          is_published?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
