@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VideoRouteImport } from './routes/video'
+import { Route as RiconoscimentiRouteImport } from './routes/riconoscimenti'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as GalleriaRouteImport } from './routes/galleria'
 import { Route as ContattiRouteImport } from './routes/contatti'
@@ -19,6 +20,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const VideoRoute = VideoRouteImport.update({
   id: '/video',
   path: '/video',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RiconoscimentiRoute = RiconoscimentiRouteImport.update({
+  id: '/riconoscimenti',
+  path: '/riconoscimenti',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/contatti': typeof ContattiRoute
   '/galleria': typeof GalleriaRoute
   '/login': typeof LoginRoute
+  '/riconoscimenti': typeof RiconoscimentiRoute
   '/video': typeof VideoRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/contatti': typeof ContattiRoute
   '/galleria': typeof GalleriaRoute
   '/login': typeof LoginRoute
+  '/riconoscimenti': typeof RiconoscimentiRoute
   '/video': typeof VideoRoute
 }
 export interface FileRoutesById {
@@ -70,13 +78,28 @@ export interface FileRoutesById {
   '/contatti': typeof ContattiRoute
   '/galleria': typeof GalleriaRoute
   '/login': typeof LoginRoute
+  '/riconoscimenti': typeof RiconoscimentiRoute
   '/video': typeof VideoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/contatti' | '/galleria' | '/login' | '/video'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/contatti'
+    | '/galleria'
+    | '/login'
+    | '/riconoscimenti'
+    | '/video'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/contatti' | '/galleria' | '/login' | '/video'
+  to:
+    | '/'
+    | '/admin'
+    | '/contatti'
+    | '/galleria'
+    | '/login'
+    | '/riconoscimenti'
+    | '/video'
   id:
     | '__root__'
     | '/'
@@ -84,6 +107,7 @@ export interface FileRouteTypes {
     | '/contatti'
     | '/galleria'
     | '/login'
+    | '/riconoscimenti'
     | '/video'
   fileRoutesById: FileRoutesById
 }
@@ -93,6 +117,7 @@ export interface RootRouteChildren {
   ContattiRoute: typeof ContattiRoute
   GalleriaRoute: typeof GalleriaRoute
   LoginRoute: typeof LoginRoute
+  RiconoscimentiRoute: typeof RiconoscimentiRoute
   VideoRoute: typeof VideoRoute
 }
 
@@ -103,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/video'
       fullPath: '/video'
       preLoaderRoute: typeof VideoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/riconoscimenti': {
+      id: '/riconoscimenti'
+      path: '/riconoscimenti'
+      fullPath: '/riconoscimenti'
+      preLoaderRoute: typeof RiconoscimentiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -149,8 +181,19 @@ const rootRouteChildren: RootRouteChildren = {
   ContattiRoute: ContattiRoute,
   GalleriaRoute: GalleriaRoute,
   LoginRoute: LoginRoute,
+  RiconoscimentiRoute: RiconoscimentiRoute,
   VideoRoute: VideoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

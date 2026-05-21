@@ -69,7 +69,7 @@ function VideoPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
+      <section className="mx-auto max-w-7xl px-4 pb-14 md:px-8 md:pb-20">
         {loading ? (
           <div className="mx-auto aspect-video w-full max-w-6xl animate-pulse rounded-[2rem] bg-muted" />
         ) : !video ? (
