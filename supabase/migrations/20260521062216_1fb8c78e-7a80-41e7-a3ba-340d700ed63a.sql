@@ -1,0 +1,2 @@
+ALTER TABLE public.media_files DROP CONSTRAINT media_files_file_type_check;
+ALTER TABLE public.media_files ADD CONSTRAINT media_files_file_type_check CHECK (file_type IN ('image','video','hero','recognition'));
