@@ -50,24 +50,26 @@ function VideoPage() {
       <section className="relative overflow-hidden border-b border-border/60">
         <div
           className="absolute inset-0 -z-10"
-          style={{ background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 60%, var(--accent) 100%)" }}
+          style={{ background: "linear-gradient(135deg, oklch(0.28 0.10 250) 0%, oklch(0.38 0.12 210) 60%, oklch(0.45 0.13 175) 100%)" }}
         />
-        <div className="absolute inset-0 -z-10 opacity-20 bg-[radial-gradient(circle_at_20%_30%,white,transparent_40%),radial-gradient(circle_at_80%_70%,white,transparent_45%)]" />
-        <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24 text-center text-primary-foreground">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 backdrop-blur">
+        <div className="absolute inset-0 -z-10 bg-black/30" />
+        <div className="absolute inset-0 -z-10 opacity-15 bg-[radial-gradient(circle_at_20%_30%,white,transparent_40%),radial-gradient(circle_at_80%_70%,white,transparent_45%)]" />
+        <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24 text-center text-white [text-shadow:0_2px_12px_rgb(0_0_0/0.35)]">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/25">
             <PlayCircle className="h-7 w-7" />
           </div>
-          <span className="mt-5 inline-block rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur">
+          <span className="mt-5 inline-block rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur ring-1 ring-white/25">
             Video
           </span>
           <h1 className="mt-4 text-3xl font-bold md:text-5xl lg:text-6xl">
             Video del progetto
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base opacity-90 md:text-lg">
+          <p className="mx-auto mt-5 max-w-2xl text-base text-white/95 md:text-lg">
             Scopri il percorso di Growing Knowledge attraverso immagini, ricerca e sperimentazione idroponica.
           </p>
         </div>
       </section>
+
 
       <section className="mx-auto max-w-7xl px-4 pb-14 md:px-8 md:pb-20">
         {loading ? (
