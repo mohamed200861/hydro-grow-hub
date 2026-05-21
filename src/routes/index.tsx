@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import {
   ArrowRight,
   Droplets,
@@ -23,6 +25,22 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const [heroUrl, setHeroUrl] = useState<string>("/hero.jpg");
+
+  useEffect(() => {
+    void supabase
+      .from("media_files")
+      .select("file_url")
+      .eq("file_type", "hero")
+      .eq("is_published", true)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.file_url) setHeroUrl(data.file_url);
+      });
+  }, []);
+
   return (
     <div>
       {/* HERO */}
@@ -80,7 +98,7 @@ function HomePage() {
             <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-accent/30 via-secondary/20 to-primary/20 blur-2xl" />
             <div className="relative overflow-hidden rounded-[2rem] border border-white/40 bg-white/30 p-2 shadow-[var(--shadow-elegant)] backdrop-blur">
               <img
-                src="/hero.jpg"
+                src={heroUrl}
                 alt="Laboratorio di idroponica Growing Knowledge"
                 className="aspect-[4/5] w-full rounded-[1.6rem] object-cover transition-transform duration-700 hover:scale-[1.02] sm:aspect-[5/4] md:aspect-[4/5]"
                 loading="eager"
