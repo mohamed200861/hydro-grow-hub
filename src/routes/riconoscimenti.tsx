@@ -66,8 +66,8 @@ function RiconoscimentiPage() {
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/25">
             <Trophy className="h-7 w-7" />
           </div>
-          <span className="mt-5 inline-block rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur ring-1 ring-white/25">
-            Riconoscimenti
+          <span className="mt-5 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur ring-1 ring-primary/20">
+          Riconoscimenti
           </span>
           <h1 className="mt-4 text-3xl font-bold md:text-5xl lg:text-6xl">
             Riconoscimenti e traguardi
