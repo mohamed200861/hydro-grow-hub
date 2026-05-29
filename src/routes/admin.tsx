@@ -766,7 +766,7 @@ function RecognitionForm({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={3}
-          maxLength={500}
+          maxLength={1000}
           className="mt-1 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm"
           placeholder="Una frase che descrive il riconoscimento"
         />
