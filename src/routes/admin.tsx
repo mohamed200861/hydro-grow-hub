@@ -765,7 +765,7 @@ function RecognitionForm({
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          rows={3}
+          rows={6}
           maxLength={1000}
           className="mt-1 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm"
           placeholder="Una frase che descrive il riconoscimento"
