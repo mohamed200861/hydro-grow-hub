@@ -119,7 +119,9 @@ function RecognitionCard({
           <img
             src={item.image_url}
             alt={item.title}
-            loading="lazy"
+            loading={index < 3 ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={index < 2 ? "high" : "auto"}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
