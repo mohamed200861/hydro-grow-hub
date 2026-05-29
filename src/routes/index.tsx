@@ -25,9 +25,10 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const [heroUrl, setHeroUrl] = useState<string>("/hero.jpg");
+  const [heroUrl, setHeroUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     void supabase
       .from("media_files")
       .select("file_url")
@@ -37,8 +38,12 @@ function HomePage() {
       .limit(1)
       .maybeSingle()
       .then(({ data }) => {
-        if (data?.file_url) setHeroUrl(data.file_url);
+        if (cancelled) return;
+        setHeroUrl(data?.file_url ?? "/hero.jpg");
       });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
@@ -68,7 +73,7 @@ function HomePage() {
             </p>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-foreground/80">
               Un progetto dedicato alla sostenibilità, alla ricerca scientifica
-              e all'uso responsabile dell'acqua, dove studenti e ricercatori
+              e all'uso responsabile dell'acqua, dove studenti e professori
               coltivano insieme conoscenza e futuro.
             </p>
 
@@ -97,12 +102,18 @@ function HomePage() {
           <div className="relative">
             <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-accent/30 via-secondary/20 to-primary/20 blur-2xl" />
             <div className="relative overflow-hidden rounded-[2rem] border border-white/40 bg-white/30 p-2 shadow-[var(--shadow-elegant)] backdrop-blur">
-              <img
-                src={heroUrl}
-                alt="Laboratorio di idroponica Growing Knowledge"
-                className="aspect-[4/5] w-full rounded-[1.6rem] object-cover transition-transform duration-700 hover:scale-[1.02] sm:aspect-[5/4] md:aspect-[4/5]"
-                loading="eager"
-              />
+              <div className="aspect-[4/5] w-full overflow-hidden rounded-[1.6rem] bg-muted sm:aspect-[5/4] md:aspect-[4/5]">
+                {heroUrl && (
+                  <img
+                    src={heroUrl}
+                    alt="Laboratorio di idroponica Growing Knowledge"
+                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                  />
+                )}
+              </div>
             </div>
             <div className="absolute -bottom-4 left-6 hidden rounded-2xl bg-background/95 px-4 py-3 shadow-[var(--shadow-soft)] sm:block">
               <p className="text-xs font-medium text-muted-foreground">Risparmio idrico</p>
@@ -129,7 +140,7 @@ function HomePage() {
               dell'Università e della Ricerca.
             </p>
             <p>
-              L'adesione dell'IIS Caramuel Roncalli di Vigevano nasce da una riflessione sul
+              L'adesione della nostra scuola, IIS Caramuel Roncalli di Vigevano, nasce da una riflessione sul
               territorio della <strong>Lomellina</strong>, area storicamente legata alla
               coltivazione del riso ma oggi esposta agli effetti della crisi climatica e
               alla crescente scarsità delle risorse idriche.
@@ -139,8 +150,7 @@ function HomePage() {
             <p>
               Riferimenti concreti come la <strong>siccità dell'estate 2022</strong>, la
               riduzione della produzione risicola, il <strong>World Water Day del marzo 2023</strong>
-              e il documento <em>«Drought in Europe»</em> del Joint Research Center
-              testimoniano la diminuzione dell'equivalente in acqua della neve sulle Alpi.
+              {" "}e il documento <em>«Drought in Europe»</em>.
             </p>
             <p>
               Da qui il collegamento ideale tra <strong>la montagna</strong>, luogo di
@@ -156,7 +166,7 @@ function HomePage() {
         <SectionHeader
           eyebrow="02 — Finalità"
           title="Finalità e obiettivi"
-          subtitle="Promuovere una consapevolezza scientificamente fondata delle problematiche legate al cambiamento climatico e alla gestione sostenibile dell'acqua, attraverso esperienze dirette, attività sperimentali e azioni di disseminazione rivolte al territorio."
+          subtitle="Promuovere una consapevolezza scientificamente fondata delle problematiche legate al cambiamento climatico e alla gestione sostenibile dell'acqua, attraverso esperienze dirette, attività sperimentali e azioni di educazione ambientale rivolte al territorio."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <FeatureCard
@@ -167,7 +177,7 @@ function HomePage() {
           <FeatureCard
             icon={<Droplets className="h-5 w-5" />}
             title="Risparmio idrico"
-            text="Sperimentare soluzioni innovative per ridurre il consumo di acqua in agricoltura attraverso la coltivazione idroponica del riso."
+            text="Sperimentare soluzioni innovative per ridurre il consumo di acqua in agricoltura attraverso la coltivazione idroponica."
           />
           <FeatureCard
             icon={<Microscope className="h-5 w-5" />}
@@ -187,7 +197,7 @@ function HomePage() {
         <SectionHeader
           eyebrow="03 — Le tre direttrici"
           title="Tre tappe, un unico percorso"
-          subtitle="Dalla montagna alla pianura, fino alla restituzione al territorio."
+          subtitle="Dalla montagna alla pianura, fino alla restituzione alla nostra scuola."
         />
         <div className="mt-12 space-y-6">
           <DirectionCard
@@ -230,7 +240,7 @@ function HomePage() {
               L'impianto è stato realizzato con il supporto scientifico del{" "}
               <strong>Dipartimento di Bioscienze dell'Università degli Studi di Milano</strong>.
               Dall'autunno 2024 gli studenti partecipano a laboratori pomeridiani dedicati
-              alla gestione dell'impianto, alla coltivazione del riso e alla progettazione di
+              alla gestione dell'impianto, alla coltivazione delle piante e alla progettazione di
               attività sperimentali.
             </p>
             <p>
@@ -245,19 +255,19 @@ function HomePage() {
           <DirectionCard
             number="03"
             icon={<Users className="h-6 w-6" />}
-            title="La restituzione: percorso didattico e disseminazione"
+            title="A scuola: percorso didattico ed educazione ambientale"
           >
             <p>
               La terza direttrice ha riguardato la progettazione di un percorso didattico
               strutturato, finalizzato alla disseminazione dei risultati e delle conoscenze
               acquisite, attraverso una <strong>mostra multimediale</strong> e laboratori
-              rivolti alle scuole del territorio, in particolare alle secondarie di primo
-              grado.
+              rivolti alle scuole del territorio, in particolare alle scuole secondarie di primo
+              grado e primarie.
             </p>
             <p>
-              Un momento centrale è stato il convegno <strong>#NoisiamoAmbiente</strong>,
-              svoltosi nel <strong>maggio 2024</strong>, con la partecipazione di docenti,
-              ricercatori universitari, esperti ambientali e rappresentanti del mondo
+              Un momento centrale è stato il convegno <strong>GROWING KNOWLEDGE</strong>,
+              svoltosi nell'<strong>aprile 2025</strong>, con la partecipazione di docenti,
+              professori universitari, esperti ambientali e rappresentanti del mondo
               agricolo.
             </p>
           </DirectionCard>
@@ -339,7 +349,7 @@ function HomePage() {
           {[
             "Consolidamento del polo didattico",
             "Ampliamento delle attività di ricerca scientifica",
-            "Rafforzamento delle azioni di disseminazione",
+            "Rafforzamento delle attività di educazione ambientale",
             "Nuovi momenti di confronto pubblico e scientifico",
           ].map((item) => (
             <div
@@ -363,13 +373,13 @@ function HomePage() {
             Una scuola che coltiva sapere, territorio e responsabilità
           </h2>
           <p className="mt-5 text-base leading-relaxed text-foreground/85 italic">
-            «Il progetto <em>‘Dalla montagna alla pianura: buone pratiche nella coltivazione
-            del riso’</em> rappresenta un esempio di come la scuola possa farsi luogo di
+            «Il progetto <em>‘GROWING KNOWLEDGE: buone pratiche nella coltivazione
+            idroponica’</em> rappresenta un esempio di come la scuola possa farsi luogo di
             connessione tra sapere scientifico, territorio e responsabilità ambientale.
             Attraverso un percorso integrato che unisce esperienza diretta, sperimentazione
-            e restituzione, <strong>Growing Knowledge</strong> contribuisce a formare
-            cittadini consapevoli e a promuovere una cultura della sostenibilità fondata
-            sulla conoscenza e sull'azione.»
+            e divulgazione, il progetto contribuisce a formare cittadini consapevoli e a
+            promuovere una cultura della sostenibilità fondata sulla conoscenza e
+            sull'azione.»
           </p>
         </div>
       </Section>
