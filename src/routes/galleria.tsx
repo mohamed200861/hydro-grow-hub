@@ -77,7 +77,7 @@ function GalleriaPage() {
           <EmptyState />
         ) : (
           <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 [column-fill:_balance]">
-            {photos.map((p) => (
+            {photos.map((p, i) => (
               <button
                 key={p.id}
                 type="button"
@@ -87,7 +87,9 @@ function GalleriaPage() {
                 <img
                   src={p.file_url}
                   alt={p.title ?? "Foto del progetto"}
-                  loading="lazy"
+                  loading={i < 6 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchPriority={i < 3 ? "high" : "auto"}
                   className="block w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
                 />
                 {(p.title || p.description) && (
