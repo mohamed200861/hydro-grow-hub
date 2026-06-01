@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Award, Trophy } from "lucide-react";
 
-const SITE_URL = "https://idroponicamente.it";
+const SITE_URL = "idro11.lovable.app";
 
 export const Route = createFileRoute("/riconoscimenti")({
   head: () => ({
