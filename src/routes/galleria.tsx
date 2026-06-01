@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ImageOff, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 
-const SITE_URL = "https://idroponicamente.it";
+const SITE_URL = "idro11.lovable.app";
 
 export const Route = createFileRoute("/galleria")({
   head: () => ({
