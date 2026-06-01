@@ -14,7 +14,7 @@ import {
   PlayCircle,
 } from "lucide-react";
 
-const SITE_URL = "https://idroponicamente.it";
+const SITE_URL = "idro11.lovable.app";
 
 export const Route = createFileRoute("/")({
   head: () => ({
