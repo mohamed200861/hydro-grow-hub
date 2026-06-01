@@ -1,11 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, ArrowUpRight } from "lucide-react";
 
+const SITE_URL = "https://idro11.lovable.app";
+
 export const Route = createFileRoute("/contatti")({
   head: () => ({
     meta: [
-      { title: "Contatti — Growing Knowledge" },
-      { name: "description", content: "Contatta i referenti del progetto Growing Knowledge dell'IIS Caramuel Roncalli di Vigevano." },
+      { title: "Contatti — Growing Knowledge | IIS Caramuel Roncalli Vigevano" },
+      { name: "description", content: "Contatta i referenti del progetto Growing Knowledge, laboratorio di idroponica dell'IIS Caramuel Roncalli di Vigevano." },
+      { name: "keywords", content: "contatti idroponica, growing knowledge contatti, IIS Caramuel Roncalli, Vigevano, referenti progetto idroponica" },
+      { property: "og:title", content: "Contatti — Growing Knowledge" },
+      { property: "og:description", content: "Contatta i referenti del progetto Growing Knowledge dell'IIS Caramuel Roncalli di Vigevano." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/contatti` },
+      { property: "og:image", content: `${SITE_URL}/logo.png` },
+      { name: "twitter:title", content: "Contatti — Growing Knowledge" },
+      { name: "twitter:description", content: "Contatta i referenti del progetto Growing Knowledge." },
+      { name: "twitter:image", content: `${SITE_URL}/logo.png` },
+    ],
+    links: [
+      { rel: "canonical", href: `${SITE_URL}/contatti` },
     ],
   }),
   component: ContattiPage,

@@ -3,23 +3,26 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { VideoOff, PlayCircle, Microscope, Leaf, Lightbulb } from "lucide-react";
 
+const SITE_URL = "https://idro11.lovable.app";
+
 export const Route = createFileRoute("/video")({
   head: () => ({
     meta: [
-      { title: "Video del progetto — Growing Knowledge" },
-      {
-        name: "description",
-        content:
-          "Il video del laboratorio di idroponica Growing Knowledge dell'IIS Caramuel Roncalli.",
-      },
-      {
-        property: "og:title",
-        content: "Video del progetto — Growing Knowledge",
-      },
-      {
-        property: "og:description",
-        content: "Guarda il video del progetto di idroponica.",
-      },
+      { title: "Video del progetto — Growing Knowledge | Laboratorio di Idroponica" },
+      { name: "description", content: "Guarda il video del laboratorio di idroponica Growing Knowledge dell'IIS Caramuel Roncalli di Vigevano: un racconto di sostenibilità, ricerca scientifica e coltivazione idroponica." },
+      { name: "keywords", content: "video idroponica, growing knowledge video, laboratorio idroponica video, coltivazione idroponica scuola, hydroponics video, IIS Caramuel Roncalli" },
+      { property: "og:title", content: "Video del progetto — Growing Knowledge" },
+      { property: "og:description", content: "Il video del laboratorio di idroponica Growing Knowledge." },
+      { property: "og:type", content: "video.other" },
+      { property: "og:url", content: `${SITE_URL}/video` },
+      { property: "og:image", content: `${SITE_URL}/logo.png` },
+      { name: "twitter:title", content: "Video del progetto — Growing Knowledge" },
+      { name: "twitter:description", content: "Il video del laboratorio di idroponica." },
+      { name: "twitter:image", content: `${SITE_URL}/logo.png` },
+      { name: "twitter:card", content: "player" },
+    ],
+    links: [
+      { rel: "canonical", href: `${SITE_URL}/video` },
     ],
   }),
   component: VideoPage,
