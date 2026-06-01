@@ -3,23 +3,25 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Award, Trophy } from "lucide-react";
 
+const SITE_URL = "https://idro11.lovable.app";
+
 export const Route = createFileRoute("/riconoscimenti")({
   head: () => ({
     meta: [
-      { title: "Riconoscimenti e traguardi — Growing Knowledge" },
-      {
-        name: "description",
-        content:
-          "Esperienze, eventi e risultati che hanno valorizzato il progetto Growing Knowledge dell'IIS Caramuel Roncalli di Vigevano.",
-      },
-      {
-        property: "og:title",
-        content: "Riconoscimenti e traguardi — Growing Knowledge",
-      },
-      {
-        property: "og:description",
-        content: "I premi, gli eventi e i traguardi del progetto Growing Knowledge.",
-      },
+      { title: "Riconoscimenti e traguardi — Growing Knowledge | IIS Caramuel Roncalli" },
+      { name: "description", content: "Premi, eventi, esperienze e traguardi del progetto Growing Knowledge: Science on Stage, Scienza Under 18 e i riconoscimenti del laboratorio di idroponica dell'IIS Caramuel Roncalli di Vigevano." },
+      { name: "keywords", content: "riconoscimenti idroponica, premi growing knowledge, science on stage, scienza under 18, progetto idroponica scuola, IIS Caramuel Roncalli premi, hydroponics awards" },
+      { property: "og:title", content: "Riconoscimenti e traguardi — Growing Knowledge" },
+      { property: "og:description", content: "I premi, gli eventi e i traguardi del progetto Growing Knowledge." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/riconoscimenti` },
+      { property: "og:image", content: `${SITE_URL}/logo.png` },
+      { name: "twitter:title", content: "Riconoscimenti — Growing Knowledge" },
+      { name: "twitter:description", content: "Premi e traguardi del progetto di idroponica." },
+      { name: "twitter:image", content: `${SITE_URL}/logo.png` },
+    ],
+    links: [
+      { rel: "canonical", href: `${SITE_URL}/riconoscimenti` },
     ],
   }),
   component: RiconoscimentiPage,

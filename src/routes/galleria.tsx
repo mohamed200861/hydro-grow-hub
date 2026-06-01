@@ -3,13 +3,25 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ImageOff, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 
+const SITE_URL = "https://idro11.lovable.app";
+
 export const Route = createFileRoute("/galleria")({
   head: () => ({
     meta: [
-      { title: "Galleria foto — Growing Knowledge" },
-      { name: "description", content: "Le immagini del laboratorio di idroponica Growing Knowledge dell'IIS Caramuel Roncalli di Vigevano." },
+      { title: "Galleria foto — Growing Knowledge | Laboratorio di Idroponica" },
+      { name: "description", content: "Galleria fotografica del laboratorio di idroponica Growing Knowledge dell'IIS Caramuel Roncalli di Vigevano: immagini di piante, impianto idroponico e attività scientifiche." },
+      { name: "keywords", content: "galleria idroponica, foto idroponica, immagini laboratorio idroponica, growing knowledge foto, coltivazione idroponica immagini, IIS Caramuel Roncalli Vigevano" },
       { property: "og:title", content: "Galleria foto — Growing Knowledge" },
-      { property: "og:description", content: "Le immagini del progetto di idroponica." },
+      { property: "og:description", content: "Le immagini del laboratorio di idroponica Growing Knowledge." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/galleria` },
+      { property: "og:image", content: `${SITE_URL}/logo.png` },
+      { name: "twitter:title", content: "Galleria foto — Growing Knowledge" },
+      { name: "twitter:description", content: "Le immagini del laboratorio di idroponica." },
+      { name: "twitter:image", content: `${SITE_URL}/logo.png` },
+    ],
+    links: [
+      { rel: "canonical", href: `${SITE_URL}/galleria` },
     ],
   }),
   component: GalleriaPage,

@@ -14,11 +14,38 @@ import {
   PlayCircle,
 } from "lucide-react";
 
+const SITE_URL = "https://idro11.lovable.app";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Growing Knowledge — Laboratorio di Idroponica | IIS Caramuel Roncalli" },
-      { name: "description", content: "Coltivare piante per crescere idee. Il progetto di idroponica dell'IIS Caramuel Roncalli di Vigevano: sostenibilità, ricerca, scuola e territorio." },
+      { title: "Growing Knowledge — Laboratorio di Idroponica | IIS Caramuel Roncalli Vigevano" },
+      { name: "description", content: "Growing Knowledge: laboratorio di idroponica dell'IIS Caramuel Roncalli di Vigevano. Coltivazione idroponica, ricerca scientifica, sostenibilità e uso responsabile dell'acqua in Lomellina." },
+      { name: "keywords", content: "idroponica, idroponicamente, growing knowledge, laboratorio idroponica, idroponica scuola, coltivazione idroponica, progetto idroponica, idroponica Vigevano, idroponica Lomellina, idroponica sostenibile, hydroponics school project, hydroponics education, IIS Caramuel Roncalli, sostenibilità, riso idroponico" },
+      { property: "og:title", content: "Growing Knowledge — Laboratorio di Idroponica" },
+      { property: "og:description", content: "Il laboratorio di idroponica dell'IIS Caramuel Roncalli di Vigevano: coltivare piante per crescere idee." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: `${SITE_URL}/logo.png` },
+      { property: "og:image:alt", content: "Growing Knowledge — Laboratorio di Idroponica" },
+      { name: "twitter:title", content: "Growing Knowledge — Laboratorio di Idroponica" },
+      { name: "twitter:description", content: "Il laboratorio di idroponica dell'IIS Caramuel Roncalli di Vigevano." },
+      { name: "twitter:image", content: `${SITE_URL}/logo.png` },
+    ],
+    links: [
+      { rel: "canonical", href: `${SITE_URL}/` },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          ],
+        }),
+      },
     ],
   }),
   component: HomePage,
