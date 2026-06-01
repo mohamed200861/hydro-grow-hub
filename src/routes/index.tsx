@@ -14,7 +14,7 @@ import {
   PlayCircle,
 } from "lucide-react";
 
-const SITE_URL = "idro11.lovable.app";
+const SITE_URL = "https://idroponicamente.it";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -107,7 +107,7 @@ function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#progetto"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-elegant)] transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-elegant)] transition-transform hover:scale-[1.02]"
               >
                 Scopri il progetto <ArrowRight className="h-4 w-4" />
               </a>
@@ -193,7 +193,7 @@ function HomePage() {
         <SectionHeader
           eyebrow="02 — Finalità"
           title="Finalità e obiettivi"
-          subtitle="Promuovere una consapevolezza scientificamente fondata delle problematiche legate al cambiamento climatico e alla gestione sostenibile dell'acqua, attraverso esperienze dirette, attività sperimentali e azioni di educazione ambientale rivolte al territorio."
+          subtitle="Promuovere una consapevolezza scientificamente fondata delle problematiche legate al cambiamento climatico e alla gestione sostenibile dell'acqua, attraverso esperienze dirette."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <FeatureCard
@@ -400,8 +400,8 @@ function HomePage() {
             Una scuola che coltiva sapere, territorio e responsabilità
           </h2>
           <p className="mt-5 text-base leading-relaxed text-foreground/85 italic">
-            «Il progetto <em>‘GROWING KNOWLEDGE: buone pratiche nella coltivazione
-            idroponica’</em> rappresenta un esempio di come la scuola possa farsi luogo di
+            «Il progetto <em>'GROWING KNOWLEDGE: buone pratiche nella coltivazione
+            idroponica'</em> rappresenta un esempio di come la scuola possa farsi luogo di
             connessione tra sapere scientifico, territorio e responsabilità ambientale.
             Attraverso un percorso integrato che unisce esperienza diretta, sperimentazione
             e divulgazione, il progetto contribuisce a formare cittadini consapevoli e a
