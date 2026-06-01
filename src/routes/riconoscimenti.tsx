@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Award, Trophy } from "lucide-react";
 
-const SITE_URL = "idro11.lovable.app";
+const SITE_URL = "https://idroponicamente.it";
 
 export const Route = createFileRoute("/riconoscimenti")({
   head: () => ({
     meta: [
       { title: "Riconoscimenti e traguardi — Growing Knowledge | IIS Caramuel Roncalli" },
-      { name: "description", content: "Premi, eventi, esperienze e traguardi del progetto Growing Knowledge: Science on Stage, Scienza Under 18 e i riconoscimenti del laboratorio di idroponica dell'IIS Caramuel Roncalli di Vigevano." },
+      { name: "description", content: "Premi, eventi, esperienze e traguardi del progetto Growing Knowledge: Science on Stage, Scienza Under 18 e i riconoscimenti del laboratorio di idroponica dell'IIS Caramuel Roncalli." },
       { name: "keywords", content: "riconoscimenti idroponica, premi growing knowledge, science on stage, scienza under 18, progetto idroponica scuola, IIS Caramuel Roncalli premi, hydroponics awards" },
       { property: "og:title", content: "Riconoscimenti e traguardi — Growing Knowledge" },
       { property: "og:description", content: "I premi, gli eventi e i traguardi del progetto Growing Knowledge." },
@@ -113,7 +113,7 @@ function RecognitionCard({
 }) {
   return (
     <article
-      className="group flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-background shadow-[var(--shadow-soft)] transition-all duration-300 animate-fade-in hover:-translate-y-1.5 hover:shadow-[var(--shadow-elegant)]"
+      className="group flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-background shadow-[var(--shadow-soft)] transition-all duration-300 animate-fade-in hover:-translate-y-1 hover:shadow-[var(--shadow-elegant)]"
       style={{ animationDelay: `${index * 60}ms` }}
     >
       <div className="relative aspect-[5/4] overflow-hidden bg-muted">
