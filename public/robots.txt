@@ -1,0 +1,39 @@
+# Robots.txt for Hydro Grow Hub
+# Rules for search engine crawlers
+
+# Allow all bots to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow private/admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /.next/
+
+# Disallow sensitive paths
+Disallow: /auth/
+Disallow: /user/profile/
+
+# Crawl delay (in seconds) - adjust based on server capacity
+Crawl-delay: 1
+
+# Request rate (pages per second)
+Request-rate: 1/1s
+
+# Specify sitemap location (update with your domain)
+Sitemap: https://hydro-grow-hub.example.com/sitemap.xml
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
