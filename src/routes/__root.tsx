@@ -16,7 +16,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 
-const SITE_URL = "https://idroponicamente.it";
+const SITE_URL = "idro11.lovable.app";
 
 function NotFoundComponent() {
   return (
