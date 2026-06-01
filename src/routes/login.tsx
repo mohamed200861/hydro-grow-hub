@@ -6,15 +6,17 @@ import { Lock } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
-    meta: [{ title: "Accesso area riservata — Growing Knowledge" }],
+    meta: [
+      { title: "Accesso area riservata — Growing Knowledge" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
   }),
   component: LoginPage,
 });
 
 function LoginPage() {
-  const { signIn, signUp } = useAuth();
+  const { signIn } = useAuth();
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -22,19 +24,14 @@ function LoginPage() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setSubmitting(true);
-    const fn = mode === "login" ? signIn : signUp;
-    const { error } = await fn(email, password);
+    const { error } = await signIn(email, password);
     setSubmitting(false);
     if (error) {
-      toast.error(error);
+      toast.error("Credenziali non valide");
       return;
     }
-    if (mode === "signup") {
-      toast.success("Registrazione completata. Controlla la tua email per confermare l'account.");
-    } else {
-      toast.success("Accesso effettuato");
-      void navigate({ to: "/admin" });
-    }
+    toast.success("Accesso effettuato");
+    void navigate({ to: "/admin" });
   }
 
   return (
@@ -44,7 +41,7 @@ function LoginPage() {
           <Lock className="h-5 w-5" />
         </div>
         <h1 className="mt-5 text-2xl font-bold text-primary">
-          {mode === "login" ? "Accesso area riservata" : "Crea account amministratore"}
+          Accesso area riservata
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Solo l'amministratore del progetto può caricare e gestire i contenuti.
@@ -56,6 +53,7 @@ function LoginPage() {
             <input
               type="email"
               required
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1.5 w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -67,6 +65,7 @@ function LoginPage() {
               type="password"
               required
               minLength={6}
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mt-1.5 w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -77,26 +76,13 @@ function LoginPage() {
             disabled={submitting}
             className="w-full rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
           >
-            {submitting ? "Attendere…" : mode === "login" ? "Accedi" : "Registrati"}
+            {submitting ? "Attendere…" : "Accedi"}
           </button>
         </form>
 
         <div className="mt-5 text-center text-xs text-muted-foreground">
-          {mode === "login" ? (
-            <>
-              Non hai ancora un account?{" "}
-              <button onClick={() => setMode("signup")} className="font-semibold text-primary hover:underline">
-                Registrati
-              </button>
-            </>
-          ) : (
-            <>
-              Hai già un account?{" "}
-              <button onClick={() => setMode("login")} className="font-semibold text-primary hover:underline">
-                Accedi
-              </button>
-            </>
-          )}
+          La registrazione pubblica non è disponibile. L'amministratore è
+          provisionato direttamente nel backend.
         </div>
         <div className="mt-3 text-center">
           <Link to="/" className="text-xs text-muted-foreground hover:underline">
