@@ -1,39 +1,42 @@
-# Robots.txt for Hydro Grow Hub
-# Rules for search engine crawlers
+# Robots.txt — Growing Knowledge / Idroponicamente
+# IIS Caramuel Roncalli — Vigevano
 
-# Allow all bots to crawl the site
 User-agent: *
 Allow: /
-
-# Disallow private/admin areas
+Disallow: /admin
 Disallow: /admin/
+Disallow: /login
 Disallow: /api/
-Disallow: /private/
-Disallow: /_next/
-Disallow: /.next/
 
-# Disallow sensitive paths
-Disallow: /auth/
-Disallow: /user/profile/
+# Allow major image and video crawlers full access to public content
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /login
+Disallow: /api/
 
-# Crawl delay (in seconds) - adjust based on server capacity
-Crawl-delay: 1
+User-agent: Googlebot-Image
+Allow: /
 
-# Request rate (pages per second)
-Request-rate: 1/1s
+User-agent: Googlebot-Video
+Allow: /
 
-# Specify sitemap location (update with your domain)
-Sitemap: https://hydro-grow-hub.example.com/sitemap.xml
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /login
+Disallow: /api/
 
-# Block bad bots
+# Block aggressive SEO scrapers
 User-agent: AhrefsBot
 Disallow: /
-
 User-agent: SemrushBot
 Disallow: /
-
 User-agent: DotBot
 Disallow: /
-
 User-agent: MJ12bot
 Disallow: /
+
+Sitemap: https://idro11.lovable.app/sitemap.xml

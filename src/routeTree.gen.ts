@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VideoRouteImport } from './routes/video'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RiconoscimentiRouteImport } from './routes/riconoscimenti'
+import { Route as ManifestDotwebmanifestRouteImport } from './routes/manifest[.]webmanifest'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as GalleriaRouteImport } from './routes/galleria'
 import { Route as ContattiRouteImport } from './routes/contatti'
@@ -22,9 +24,19 @@ const VideoRoute = VideoRouteImport.update({
   path: '/video',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RiconoscimentiRoute = RiconoscimentiRouteImport.update({
   id: '/riconoscimenti',
   path: '/riconoscimenti',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManifestDotwebmanifestRoute = ManifestDotwebmanifestRouteImport.update({
+  id: '/manifest.webmanifest',
+  path: '/manifest.webmanifest',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -59,7 +71,9 @@ export interface FileRoutesByFullPath {
   '/contatti': typeof ContattiRoute
   '/galleria': typeof GalleriaRoute
   '/login': typeof LoginRoute
+  '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/riconoscimenti': typeof RiconoscimentiRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/video': typeof VideoRoute
 }
 export interface FileRoutesByTo {
@@ -68,7 +82,9 @@ export interface FileRoutesByTo {
   '/contatti': typeof ContattiRoute
   '/galleria': typeof GalleriaRoute
   '/login': typeof LoginRoute
+  '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/riconoscimenti': typeof RiconoscimentiRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/video': typeof VideoRoute
 }
 export interface FileRoutesById {
@@ -78,7 +94,9 @@ export interface FileRoutesById {
   '/contatti': typeof ContattiRoute
   '/galleria': typeof GalleriaRoute
   '/login': typeof LoginRoute
+  '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/riconoscimenti': typeof RiconoscimentiRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/video': typeof VideoRoute
 }
 export interface FileRouteTypes {
@@ -89,7 +107,9 @@ export interface FileRouteTypes {
     | '/contatti'
     | '/galleria'
     | '/login'
+    | '/manifest.webmanifest'
     | '/riconoscimenti'
+    | '/sitemap.xml'
     | '/video'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -98,7 +118,9 @@ export interface FileRouteTypes {
     | '/contatti'
     | '/galleria'
     | '/login'
+    | '/manifest.webmanifest'
     | '/riconoscimenti'
+    | '/sitemap.xml'
     | '/video'
   id:
     | '__root__'
@@ -107,7 +129,9 @@ export interface FileRouteTypes {
     | '/contatti'
     | '/galleria'
     | '/login'
+    | '/manifest.webmanifest'
     | '/riconoscimenti'
+    | '/sitemap.xml'
     | '/video'
   fileRoutesById: FileRoutesById
 }
@@ -117,7 +141,9 @@ export interface RootRouteChildren {
   ContattiRoute: typeof ContattiRoute
   GalleriaRoute: typeof GalleriaRoute
   LoginRoute: typeof LoginRoute
+  ManifestDotwebmanifestRoute: typeof ManifestDotwebmanifestRoute
   RiconoscimentiRoute: typeof RiconoscimentiRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VideoRoute: typeof VideoRoute
 }
 
@@ -130,11 +156,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/riconoscimenti': {
       id: '/riconoscimenti'
       path: '/riconoscimenti'
       fullPath: '/riconoscimenti'
       preLoaderRoute: typeof RiconoscimentiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manifest.webmanifest': {
+      id: '/manifest.webmanifest'
+      path: '/manifest.webmanifest'
+      fullPath: '/manifest.webmanifest'
+      preLoaderRoute: typeof ManifestDotwebmanifestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -181,9 +221,21 @@ const rootRouteChildren: RootRouteChildren = {
   ContattiRoute: ContattiRoute,
   GalleriaRoute: GalleriaRoute,
   LoginRoute: LoginRoute,
+  ManifestDotwebmanifestRoute: ManifestDotwebmanifestRoute,
   RiconoscimentiRoute: RiconoscimentiRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   VideoRoute: VideoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
