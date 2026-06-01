@@ -39,4 +39,4 @@ Disallow: /
 User-agent: MJ12bot
 Disallow: /
 
-Sitemap: https://idro11.lovable.app/sitemap.xml
+Sitemap: https://idroponicamente.it/sitemap.xml

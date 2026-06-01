@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "https://idro11.lovable.app";
+const BASE_URL = "https://idroponicamente.it";
 
 interface SitemapEntry {
   path: string;
