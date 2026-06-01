@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, ArrowUpRight } from "lucide-react";
 
-const SITE_URL = "https://idroponicamente.it";
+const SITE_URL = "idro11.lovable.app";
 
 export const Route = createFileRoute("/contatti")({
   head: () => ({
