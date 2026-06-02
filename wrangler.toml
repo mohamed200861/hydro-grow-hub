@@ -6,3 +6,5 @@ command = "npm run build"
 
 [alias]
 "tanstack-start-injected-head-scripts:v" = "./node_modules/@tanstack/start/dist/esm/client/head-scripts.js"
+
+# Force rebuild
