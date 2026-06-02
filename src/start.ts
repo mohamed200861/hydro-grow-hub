@@ -21,7 +21,7 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
 // Inject security & cache headers on every response without altering the body.
 const securityHeadersMiddleware = createMiddleware().server(async ({ next, request }) => {
   const response = await next();
-  const res = response instanceof Response ? response : new Response(response as BodyInit);
+  const res = response instanceof Response ? response : new Response(response as unknown as BodyInit);
   const headers = new Headers(res.headers);
 
   // Conservative security headers — do NOT add a CSP that could break inline scripts/styles.
