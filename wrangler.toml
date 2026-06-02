@@ -1,0 +1,8 @@
+name = "caramuel-idroponica"
+compatibility_date = "2026-06-02"
+
+[build]
+command = "npm run build"
+
+[alias]
+"tanstack-start-injected-head-scripts:v" = "./node_modules/@tanstack/start/dist/esm/client/head-scripts.js"
