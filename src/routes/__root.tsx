@@ -15,8 +15,9 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { SEO_ORIGIN } from "@/lib/seo";
 
-const SITE_URL = "https://idroponicamente.it";
+const SITE_URL = SEO_ORIGIN;
 
 function NotFoundComponent() {
   return (
