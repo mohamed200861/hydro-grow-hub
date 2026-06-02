@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { ROBOTS_TXT, renderSitemapXml } from "./lib/seo";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -23,6 +24,29 @@ function brandedErrorResponse(): Response {
     status: 500,
     headers: { "content-type": "text/html; charset=utf-8" },
   });
+}
+
+function seoFileResponse(pathname: string): Response | null {
+  if (pathname === "/sitemap.xml") {
+    return new Response(renderSitemapXml(), {
+      headers: {
+        "content-type": "application/xml; charset=utf-8",
+        "cache-control": "public, max-age=0, s-maxage=300, must-revalidate",
+        "x-robots-tag": "index, follow",
+      },
+    });
+  }
+
+  if (pathname === "/robots.txt") {
+    return new Response(ROBOTS_TXT, {
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "public, max-age=0, s-maxage=300, must-revalidate",
+      },
+    });
+  }
+
+  return null;
 }
 
 function isCatastrophicSsrErrorBody(body: string, responseStatus: number): boolean {
@@ -69,6 +93,9 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const seoResponse = seoFileResponse(new URL(request.url).pathname);
+      if (seoResponse) return seoResponse;
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);

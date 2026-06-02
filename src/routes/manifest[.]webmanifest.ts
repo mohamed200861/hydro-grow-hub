@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { SEO_ORIGIN } from "@/lib/seo";
 
 export const Route = createFileRoute("/manifest.webmanifest")({
   server: {
@@ -10,8 +11,9 @@ export const Route = createFileRoute("/manifest.webmanifest")({
           short_name: "Growing Knowledge",
           description:
             "Laboratorio di idroponica dell'IIS Caramuel Roncalli di Vigevano. Sostenibilità, ricerca scientifica e uso responsabile dell'acqua.",
-          start_url: "/",
-          scope: "/",
+          id: `${SEO_ORIGIN}/`,
+          start_url: `${SEO_ORIGIN}/`,
+          scope: `${SEO_ORIGIN}/`,
           display: "standalone",
           orientation: "portrait",
           background_color: "#ffffff",
@@ -19,8 +21,8 @@ export const Route = createFileRoute("/manifest.webmanifest")({
           lang: "it-IT",
           categories: ["education", "science", "sustainability"],
           icons: [
-            { src: "/logo.png", sizes: "192x192", type: "image/png", purpose: "any" },
-            { src: "/logo.png", sizes: "512x512", type: "image/png", purpose: "any maskable" },
+            { src: `${SEO_ORIGIN}/logo.png`, sizes: "192x192", type: "image/png", purpose: "any" },
+            { src: `${SEO_ORIGIN}/logo.png`, sizes: "512x512", type: "image/png", purpose: "any maskable" },
           ],
         };
         return new Response(JSON.stringify(manifest), {
