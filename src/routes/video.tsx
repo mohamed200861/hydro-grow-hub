@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { VideoOff, PlayCircle, Microscope, Leaf, Lightbulb } from "lucide-react";
+import { SEO_ORIGIN } from "@/lib/seo";
 
-const SITE_URL = "https://idroponicamente.it";
+const SITE_URL = SEO_ORIGIN;
 
 export const Route = createFileRoute("/video")({
   head: () => ({
