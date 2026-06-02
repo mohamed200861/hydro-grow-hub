@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { VideoOff, PlayCircle, Microscope, Leaf, Lightbulb } from "lucide-react";
 
-const SITE_URL = "idro11.lovable.app";
+const SITE_URL = "https://idroponicamente.it";
 
 export const Route = createFileRoute("/video")({
   head: () => ({
