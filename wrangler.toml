@@ -1,10 +1,7 @@
 name = "caramuel-idroponica"
-compatibility_date = "2026-06-02"
-
-[build]
-command = "npm run build"
+compatibility_date = "2025-09-24"
+compatibility_flags = ["nodejs_compat"]
+main = "src/server.ts"
 
 [alias]
 "tanstack-start-injected-head-scripts:v" = "./node_modules/@tanstack/start/dist/esm/client/head-scripts.js"
-
-# Force rebuild
