@@ -38,4 +38,4 @@ L'unica via è eliminare l'SSR e trasformare il progetto in SPA statica (cambio 
 
 ## Promemoria
 
-Lovable pubblica già automaticamente su `https://idro11.lovable.app`. Cloudflare serve solo se vuoi hostare sul tuo account (es. dominio custom su Cloudflare).
+Lovable pubblica già automaticamente il progetto; per la SEO pubblica usa sempre `https://idroponicamente.it` come dominio canonico.
