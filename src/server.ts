@@ -26,6 +26,18 @@ function brandedErrorResponse(): Response {
   });
 }
 
+function withSecurityHeaders(response: Response): Response {
+  const headers = new Headers(response.headers);
+  headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+  headers.set("X-Content-Type-Options", "nosniff");
+  headers.set("X-Frame-Options", "SAMEORIGIN");
+  headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  headers.set("Cross-Origin-Opener-Policy", "same-origin");
+  headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), interest-cohort=()");
+  headers.set("Content-Security-Policy", "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://*.supabase.co wss://*.supabase.co; form-action 'self'; manifest-src 'self'");
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
 function seoFileResponse(pathname: string): Response | null {
   if (pathname === "/sitemap.xml") {
     return new Response(renderSitemapXml(), {
@@ -94,14 +106,14 @@ export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const seoResponse = seoFileResponse(new URL(request.url).pathname);
-      if (seoResponse) return seoResponse;
+      if (seoResponse) return withSecurityHeaders(seoResponse);
 
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withSecurityHeaders(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
-      return brandedErrorResponse();
+      return withSecurityHeaders(brandedErrorResponse());
     }
   },
 };
