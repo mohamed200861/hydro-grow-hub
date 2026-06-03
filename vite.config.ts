@@ -12,4 +12,11 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  vite: {
+    resolve: {
+      alias: {
+        "tanstack-start-injected-head-scripts:v": "/src/lib/tanstack-head-scripts-shim.ts",
+      },
+    },
+  },
 });
