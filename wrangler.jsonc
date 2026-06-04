@@ -1,9 +1,7 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "caramuel-idroponica",
-  "main": "src/server.ts",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
-  "alias": {
-    "tanstack-start-injected-head-scripts:v": "./src/lib/tanstack-head-scripts-shim.ts"
-  }
+  "main": "src/server.ts"
 }
