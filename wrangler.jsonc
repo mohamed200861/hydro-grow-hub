@@ -5,6 +5,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
   "alias": {
-    "tanstack-start-injected-head-scripts:v": "./src/lib/tanstack-head-scripts-shim.ts"
+    "tanstack-start-injected-head-scripts:v": "./src/lib/tanstack-head-scripts-shim.ts",
+    "tanstack-start-manifest:v": "./src/lib/tanstack-manifest-shim.ts"
   }
 }
