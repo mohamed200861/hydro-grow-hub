@@ -1,5 +1,5 @@
 {
-  "name": "caramuel-idroponica",
+  "name": "hydro-grow-hub",
   "main": "dist/server/server.js",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
