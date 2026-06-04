@@ -1,41 +1,36 @@
-## Diagnosi
+Obiettivo: risolvere l’errore Cloudflare `Could not resolve "tanstack-start-manifest:v"` senza modificare layout, testi, immagini, video, routing applicativo, backend o contenuti visibili.
 
-Il tuo progetto **non è configurato per Cloudflare Pages**, ma per **Cloudflare Workers** (tramite `@cloudflare/vite-plugin` + `wrangler.jsonc`). Sono due prodotti diversi:
+Piano di intervento:
 
-- **Pages** serve cartelle statiche con eventuali Functions (`_worker.js` in `.output/public`).
-- **Workers** è un servizio sempre attivo che gestisce SSR. Il tuo `src/server.ts` esporta `{ fetch }`: questo è un Worker, non un sito statico.
+1. Correggere la configurazione Wrangler usata dal deploy
+   - Cloudflare sta eseguendo `npx wrangler deploy` e legge la configurazione Wrangler.
+   - Gli alias attuali sono presenti, ma la forma `[alias]` in `wrangler.toml` può non essere interpretata correttamente dal bundler di Wrangler in questa pipeline.
+   - Convertirò la configurazione alias nel formato previsto da Wrangler, usando `rules` con `type = "ESModule"` per mappare esplicitamente:
+     - `tanstack-start-manifest:v`
+     - `tanstack-start-injected-head-scripts:v`
+   - Mantengo anche la configurazione JSON coerente, così non ci sono divergenze tra `wrangler.toml` e `wrangler.jsonc`.
 
-Il consiglio che hai ricevuto (`preset: 'cloudflare-pages'` in `app.config.ts`) si riferisce a **vecchie versioni di TanStack Start basate su Vinxi/Nitro**. Questa versione (1.167) **non usa più Nitro/preset** e non ha `app.config.ts`. Aggiungere quel file non avrebbe alcun effetto — anzi, romperebbe la build.
+2. Rendere gli shim TanStack compatibili con il runtime di deploy
+   - Verificherò che gli shim esportino esattamente ciò che TanStack Start si aspetta.
+   - In particolare `tanstack-start-manifest:v` deve esportare `tsrStartManifest` in una forma sicura per SSR/Worker.
+   - Nessun contenuto visibile del sito verrà toccato.
 
-## Soluzione corretta: deploy come Worker (non Pages)
+3. Mantenere intatti SEO, sitemap e dominio
+   - Non cambierò testi SEO già impostati, canonical, Open Graph o schema se non necessario per la build.
+   - Controllerò che non vengano reintrodotti riferimenti a `lovable.app` nei file SEO/sitemap.
 
-Su Cloudflare devi creare un **Worker**, non una Pages app.
+4. Validazione tecnica finale
+   - Verificherò che non restino import virtuali non risolti nella configurazione Cloudflare.
+   - Controllerò i file di configurazione e gli shim modificati.
+   - Non farò modifiche visive, non toccherò immagini/video/riconoscimenti e non toccherò database/RLS/admin.
 
-### Passi
+File previsti:
+- `wrangler.toml`
+- `wrangler.jsonc`
+- eventualmente `src/lib/tanstack-manifest-shim.ts`
+- eventualmente `src/lib/tanstack-head-scripts-shim.ts`
 
-1. **Cloudflare Dashboard → Workers & Pages → Create → Workers** (non Pages).
-2. **Connect to Git** → seleziona il repo GitHub.
-3. Impostazioni build:
-   - **Build command**: `npm run build`
-   - **Deploy command**: `npx wrangler deploy` (impostato di default leggendo `wrangler.jsonc`)
-   - **Root directory**: vuoto
-4. **Environment variables** (Production + Preview):
-   - `VITE_SUPABASE_URL` = `https://lkvloujfuaphbpflbluh.supabase.co`
-   - `VITE_SUPABASE_PUBLISHABLE_KEY` = (valore dal `.env`)
-   - `VITE_SUPABASE_PROJECT_ID` = `lkvloujfuaphbpflbluh`
-   - `SUPABASE_URL` = stesso URL
-   - `SUPABASE_PUBLISHABLE_KEY` = stesso valore
-   - `NODE_VERSION` = `20`
-5. **Deploy**. L'URL sarà tipo `tanstack-start-app.<account>.workers.dev`.
-
-### Se vuoi a tutti i costi usare Pages
-
-L'unica via è eliminare l'SSR e trasformare il progetto in SPA statica (cambio architetturale grosso: niente server functions, niente SSR, niente `src/server.ts`). Non lo consiglio — perderesti funzionalità.
-
-## Nessuna modifica al codice necessaria
-
-`wrangler.jsonc`, `vite.config.ts`, `src/server.ts` sono già corretti per deploy come Worker. Il problema è solo nella scelta del prodotto Cloudflare in dashboard.
-
-## Promemoria
-
-Lovable pubblica già automaticamente il progetto; per la SEO pubblica usa sempre `https://idroponicamente.it` come dominio canonico.
+Risultato atteso:
+- Cloudflare non dovrà più fallire su `tanstack-start-manifest:v`.
+- Il sito resterà identico visivamente e funzionalmente.
+- Sitemap/SEO non saranno alterati né peggiorati.
