@@ -7,6 +7,7 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 const tanstackHeadScriptsShim = new URL("./src/lib/tanstack-head-scripts-shim.ts", import.meta.url).pathname;
+const tanstackManifestShim = new URL("./src/lib/tanstack-manifest-shim.ts", import.meta.url).pathname;
 
 // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
@@ -18,6 +19,7 @@ export default defineConfig({
     resolve: {
       alias: {
         "tanstack-start-injected-head-scripts:v": tanstackHeadScriptsShim,
+        "tanstack-start-manifest:v": tanstackManifestShim,
       },
     },
   },
