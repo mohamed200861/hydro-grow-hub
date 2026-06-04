@@ -149,7 +149,7 @@ function VideoPage() {
             )}
 
             <p className="mx-auto mt-8 max-w-3xl text-center text-base leading-relaxed text-foreground/80">
-              Il video racconta il percorso del progetto, dalla sperimentazione idroponica alle attività di educazione ambientale, mostrando il valore
+              Il video realizzato per progetto “STEAM femminile plurale” racconta brevemente il percorso del progetto, dalla sperimentazione idroponica alle attività di educazione ambientale, mostrando il valore
               scientifico, didattico e ambientale di{" "}
               <strong>Growing Knowledge</strong>.
             </p>
