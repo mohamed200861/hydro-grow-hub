@@ -1,10 +1,14 @@
 {
   "name": "caramuel-idroponica",
-  "main": "src/server.ts",
+  "main": "dist/server/server.js",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
 
   "alias": {
-    "tanstack-start-injected-head-scripts:v": "./src/lib/tanstack-head-scripts-shim.ts"
+    "tanstack-start-injected-head-scripts:v": "./src/lib/tanstack-head-scripts-shim.ts",
+    "tanstack-start-manifest:v": "./src/lib/tanstack-manifest-shim.ts",
+    "#tanstack-router-entry": "./src/lib/tanstack-router-entry.ts",
+    "#tanstack-start-entry": "./src/lib/tanstack-start-entry.ts",
+    "#tanstack-start-plugin-adapters": "./src/lib/tanstack-plugin-adapters.ts"
   }
 }
